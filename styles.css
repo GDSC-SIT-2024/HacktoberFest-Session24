@@ -9,9 +9,8 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 body {
-  background: linear-gradient(50deg, #f3c680, hsla(179,54%,76%,1));
+  background: linear-gradient(50deg, #f3c680, hsla(179, 54%, 76%, 1));
 }
-
 
 /*--------------------
 Buttons
@@ -22,20 +21,20 @@ Buttons
   color: hsl(0, 0, 100);
   text-decoration: none;
   margin: 20px 0;
-  padding: 15px 15px;
+  padding: 15px; /* Adjusted for balance */
   border-radius: 5px;
   position: relative;
 
   &::after {
     content: '';
-    position
+    position: absolute; /* Added 'absolute' */
     z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    transition: all .2s ease-in-out;
-    box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0), 0 3px 3px hsla(0, 0, 0, .2);
+    transition: all 0.2s ease-in-out;
+    box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0), 0 3px 3px hsla(0, 0, 0, 0.2);
     border-radius: 5px;
   }
 
@@ -43,14 +42,12 @@ Buttons
     background: hsla(0, 0, 0, 0.1);
     box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0.2);
   }
-
 }
 
 /*--------------------
 Form
 --------------------*/
 .form {
-
   fieldset {
     border: none;
     padding: 0;
@@ -79,7 +76,7 @@ Form
       display: block;
       text-transform: uppercase;
       font-size: 11px;
-      color: hsla(0, 0, 0, .6);
+      color: hsla(0, 0, 0, 0.6);
       margin-bottom: 5px;
       font-weight: bold;
       font-family: Inconsolata;
@@ -93,7 +90,7 @@ Form
       padding: 10px;
       border-radius: 5px;
       font-size: 15px;
-      outline: none!important;
+      outline: none !important;
       border: 1px solid hsla(0, 0, 0, 0.3);
       box-shadow: inset 0 1px 4px hsla(0, 0, 0, 0.2);
 
@@ -129,7 +126,7 @@ Form
         padding: 0;
         border: none;
         width: 100%;
-        outline: none!important;
+        outline: none !important;
         top: 6px;
         left: 6px;
         background: none;
@@ -138,16 +135,13 @@ Form
           color: transparent;
           text-shadow: 0 0 0 #000;
         }
-
       }
     }
-
-
   }
 
   button {
     width: 100%;
-    outline: none!important;
+    outline: none !important;
     background: linear-gradient(180deg, #49a09b, #3d8291);
     text-transform: uppercase;
     font-weight: bold;
@@ -160,7 +154,6 @@ Form
       margin-right: 6px;
     }
   }
-
 }
 
 /*--------------------
@@ -173,7 +166,7 @@ Checkout
   background: white;
   border-radius: 15px;
   padding: 160px 45px 30px;
-  box-shadow: 0 10px 40px hsla(0, 0, 0, .1);
+  box-shadow: 0 10px 40px hsla(0, 0, 0, 0.1);
 }
 
 /*--------------------
@@ -205,7 +198,6 @@ Credit Card
     font-family: Inconsolata;
     top: 0;
     left: 0;
-    text-shadow: 0 1px 1px hsla(0, 0, 0, 0.3);
     box-shadow: 0 1px 6px hsla(0, 0, 0, 0.3);
 
     &::before {
@@ -217,7 +209,7 @@ Credit Card
       left: 0;
       background: url('http://cdn.flaticon.com/svg/44/44386.svg') no-repeat center;
       background-size: cover;
-      opacity: .05;
+      opacity: 0.05;
     }
   }
 
@@ -251,7 +243,6 @@ Credit Card
     .logo {
       top: 185px;
     }
-
   }
 
   .chip {
@@ -260,7 +251,7 @@ Credit Card
     height: 45px;
     top: 20px;
     left: 20px;
-    background: linear-gradient(135deg, hsl(269,54%,87%) 0%,hsl(200,64%,89%) 44%,hsl(18,55%,94%) 100%);;
+    background: linear-gradient(135deg, hsl(269, 54%, 87%) 0%, hsl(200, 64%, 89%) 44%, hsl(18, 55%, 94%) 100%);
     border-radius: 8px;
 
     &::before {
@@ -271,7 +262,7 @@ Credit Card
       left: 0;
       right: 0;
       margin: auto;
-      border: 4px solid hsla(0, 0, 50, .1);
+      border: 4px solid hsla(0, 0, 50, 0.1);
       width: 80%;
       height: 70%;
       border-radius: 5px;
@@ -298,7 +289,6 @@ Credit Card
   label {
     font-size: 10px;
     letter-spacing: 1px;
-    text-shadow: none;
     text-transform: uppercase;
     font-weight: normal;
     opacity: 0.5;
@@ -341,21 +331,11 @@ Credit Card
       color: #fff;
     }
   }
-
-
 }
-
 
 .the-most {
   position: fixed;
   z-index: 1;
   bottom: 0;
-  left: 0;
-  width: 50vw;
-  max-width: 200px;
-  padding: 10px;
+  left: 
   
-  img {
-    max-width: 100%;
-  }
-}
