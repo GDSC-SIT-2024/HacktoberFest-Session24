@@ -4,18 +4,18 @@
       <!-- Front of the Card -->
       <div class="front">
         <div class="chip"></div>
-        <div class="logo">
+        <div class="card-logo">
           <svg version="1.1" id="visa" xmlns="http://www.w3.org/2000/svg" width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834">
             <!-- SVG content -->
           </svg>
         </div>
         <div class="number">XXXX XXXX XXXX XXXX</div>
         <div class="card-holder">
-          <label for="card-holder">Card holder</label>
+          <label for="card-holder-display">Card holder</label>
           <div id="display-card-holder">John Doe</div>
         </div>
         <div class="card-expiration-date">
-          <label for="card-expiration-month">Expires</label>
+          <label for="card-expiration-month-display">Expires</label>
           <div id="display-expiration">MM/YY</div>
         </div>
       </div>
@@ -24,7 +24,7 @@
       <div class="back">
         <div class="strip"></div>
         <div class="ccv">
-          <label for="ccv">CCV</label>
+          <label for="ccv-display">CCV</label>
           <div id="display-ccv">XXX</div>
         </div>
       </div>
@@ -32,24 +32,24 @@
   </div>
 
   <!-- Form for card details -->
-  <form class="form" autocomplete="off" novalidate>
+  <form class="form" autocomplete="off">
     <fieldset>
       <label for="card-number">Card Number</label>
-      <input type="text" id="card-number" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-1" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-2" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-3" class="input-cart-number" maxlength="4" placeholder="XXXX" />
+      <input type="number" id="card-number-0" class="input-card-number" maxlength="4" aria-label="First four digits of card number" placeholder="XXXX" required />
+      <input type="number" id="card-number-1" class="input-card-number" maxlength="4" aria-label="Second four digits of card number" placeholder="XXXX" required />
+      <input type="number" id="card-number-2" class="input-card-number" maxlength="4" aria-label="Third four digits of card number" placeholder="XXXX" required />
+      <input type="number" id="card-number-3" class="input-card-number" maxlength="4" aria-label="Last four digits of card number" placeholder="XXXX" required />
     </fieldset>
 
     <fieldset>
-      <label for="card-holder">Card holder</label>
-      <input type="text" id="card-holder" placeholder="Card Holder Name" required />
+      <label for="card-holder">Card Holder</label>
+      <input type="text" id="card-holder" placeholder="Card Holder Name" pattern="[a-zA-Z\s]+" title="Only letters and spaces are allowed" aria-required="true" required />
     </fieldset>
 
     <fieldset class="fieldset-expiration">
-      <label for="card-expiration-month">Expiration date</label>
+      <label for="card-expiration-month">Expiration Date</label>
       <div class="select">
-        <select id="card-expiration-month" required>
+        <select id="card-expiration-month" aria-required="true" required>
           <option value="" disabled selected>MM</option>
           <option value="01">01</option>
           <option value="02">02</option>
@@ -65,18 +65,25 @@
           <option value="12">12</option>
         </select>
 
-        <select id="card-expiration-year" required>
-          <option value="" disabled selected>YY</option>
-          <option value="23">2023</option>
-          <option value="24">2024</option>
-          <option value="25">2025</option>
+        <select id="card-expiration-year" aria-required="true" required>
+          <!-- Year options are generated dynamically -->
+          <script>
+            var yearSelect = document.getElementById('card-expiration-year');
+            var currentYear = new Date().getFullYear();
+            for (var i = 0; i < 10; i++) {
+              var option = document.createElement('option');
+              option.value = currentYear + i;
+              option.text = currentYear + i;
+              yearSelect.appendChild(option);
+            }
+          </script>
         </select>
       </div>
     </fieldset>
 
     <fieldset>
       <label for="ccv">CCV</label>
-      <input type="text" id="ccv" maxlength="3" placeholder="XXX" required />
+      <input type="number" id="ccv" maxlength="3" pattern="\d{3}" aria-label="3-digit CCV" placeholder="XXX" required />
     </fieldset>
 
     <button type="submit" class="submit-button">Submit Payment</button>
