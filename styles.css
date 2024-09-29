@@ -28,7 +28,7 @@ Buttons
 
   &::after {
     content: '';
-    position
+    position: absolute; /* Fixed the missing colon */
     z-index: 1;
     top: 0;
     left: 0;
@@ -43,7 +43,6 @@ Buttons
     background: hsla(0, 0, 0, 0.1);
     box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0.2);
   }
-
 }
 
 /*--------------------
@@ -138,11 +137,8 @@ Form
           color: transparent;
           text-shadow: 0 0 0 #000;
         }
-
       }
     }
-
-
   }
 
   button {
@@ -251,7 +247,6 @@ Credit Card
     .logo {
       top: 185px;
     }
-
   }
 
   .chip {
@@ -260,7 +255,7 @@ Credit Card
     height: 45px;
     top: 20px;
     left: 20px;
-    background: linear-gradient(135deg, hsl(269,54%,87%) 0%,hsl(200,64%,89%) 44%,hsl(18,55%,94%) 100%);;
+    background: linear-gradient(135deg, hsl(269,54%,87%) 0%,hsl(200,64%,89%) 44%,hsl(18,55%,94%) 100%);
     border-radius: 8px;
 
     &::before {
@@ -340,22 +335,5 @@ Credit Card
       margin: -25px 0 14px;
       color: #fff;
     }
-  }
-
-
-}
-
-
-.the-most {
-  position: fixed;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  width: 50vw;
-  max-width: 200px;
-  padding: 10px;
-  
-  img {
-    max-width: 100%;
   }
 }
