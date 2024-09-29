@@ -9,9 +9,9 @@
             <!-- SVG content -->
           </svg>
         </div>
-        <div class="number">XXXX XXXX XXXX XXXX</div>
+        <div class="number" id="display-card-number">XXXX XXXX XXXX XXXX</div>
         <div class="card-holder">
-          <label for="card-holder">Card holder</label>
+          <label for="card-holder">Card Holder</label>
           <div id="display-card-holder">John Doe</div>
         </div>
         <div class="card-expiration-date">
@@ -24,7 +24,7 @@
       <div class="back">
         <div class="strip"></div>
         <div class="ccv">
-          <label for="ccv">CCV</label>
+          <label for="display-ccv">CCV</label>
           <div id="display-ccv">XXX</div>
         </div>
       </div>
@@ -35,19 +35,16 @@
   <form class="form" autocomplete="off" novalidate>
     <fieldset>
       <label for="card-number">Card Number</label>
-      <input type="text" id="card-number" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-1" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-2" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-3" class="input-cart-number" maxlength="4" placeholder="XXXX" />
+      <input type="text" id="card-number" class="input-cart-number" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" required />
     </fieldset>
 
     <fieldset>
-      <label for="card-holder">Card holder</label>
+      <label for="card-holder">Card Holder</label>
       <input type="text" id="card-holder" placeholder="Card Holder Name" required />
     </fieldset>
 
     <fieldset class="fieldset-expiration">
-      <label for="card-expiration-month">Expiration date</label>
+      <label for="card-expiration-month">Expiration Date</label>
       <div class="select">
         <select id="card-expiration-month" required>
           <option value="" disabled selected>MM</option>
@@ -67,9 +64,13 @@
 
         <select id="card-expiration-year" required>
           <option value="" disabled selected>YY</option>
-          <option value="23">2023</option>
-          <option value="24">2024</option>
-          <option value="25">2025</option>
+          <!-- Dynamic Year Generation -->
+          <script>
+            const currentYear = new Date().getFullYear();
+            for (let i = 0; i <= 10; i++) {
+              document.write('<option value="' + (currentYear + i).toString().slice(2) + '">' + (currentYear + i) + '</option>');
+            }
+          </script>
         </select>
       </div>
     </fieldset>
@@ -82,3 +83,35 @@
     <button type="submit" class="submit-button">Submit Payment</button>
   </form>
 </div>
+
+<script>
+  const cardNumberInput = document.getElementById('card-number');
+  const displayCardNumber = document.getElementById('display-card-number');
+  const cardHolderInput = document.getElementById('card-holder');
+  const displayCardHolder = document.getElementById('display-card-holder');
+  const expirationMonth = document.getElementById('card-expiration-month');
+  const expirationYear = document.getElementById('card-expiration-year');
+  const displayExpiration = document.getElementById('display-expiration');
+  const ccvInput = document.getElementById('ccv');
+  const displayCcv = document.getElementById('display-ccv');
+
+  cardNumberInput.addEventListener('input', () => {
+    displayCardNumber.innerText = cardNumberInput.value.replace(/(\d{4})(?=\d)/g, '$1 ');
+  });
+
+  cardHolderInput.addEventListener('input', () => {
+    displayCardHolder.innerText = cardHolderInput.value;
+  });
+
+  expirationMonth.addEventListener('change', () => {
+    displayExpiration.innerText = expirationMonth.value + '/' + expirationYear.value;
+  });
+
+  expirationYear.addEventListener('change', () => {
+    displayExpiration.innerText = expirationMonth.value + '/' + expirationYear.value;
+  });
+
+  ccvInput.addEventListener('input', () => {
+    displayCcv.innerText = ccvInput.value;
+  });
+</script>
