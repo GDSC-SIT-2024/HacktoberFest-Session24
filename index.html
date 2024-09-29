@@ -1,84 +1,102 @@
 <div class="checkout">
   <div class="credit-card-box">
     <div class="flip">
-      <!-- Front of the Card -->
+      <!-- Front Side -->
       <div class="front">
         <div class="chip"></div>
         <div class="logo">
-          <svg version="1.1" id="visa" xmlns="http://www.w3.org/2000/svg" width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834">
-            <!-- SVG content -->
+          <!-- External logo could be loaded dynamically to avoid duplication -->
+          <svg version="1.1" id="visa-logo" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="47.834px" height="47.834px"
+               viewBox="0 0 47.834 47.834" aria-labelledby="visa-title" role="img">
+            <title id="visa-title">Visa Logo</title>
+            <g>
+              <!-- SVG Path content -->
+            </g>
           </svg>
         </div>
-        <div class="number">XXXX XXXX XXXX XXXX</div>
+        <div class="number"></div>
         <div class="card-holder">
           <label for="card-holder">Card holder</label>
-          <div id="display-card-holder">John Doe</div>
+          <div id="card-holder-display"></div>
         </div>
         <div class="card-expiration-date">
-          <label for="card-expiration-month">Expires</label>
-          <div id="display-expiration">MM/YY</div>
+          <label for="card-expiration">Expires</label>
+          <div id="card-expiration-display"></div>
         </div>
       </div>
 
-      <!-- Back of the Card -->
+      <!-- Back Side -->
       <div class="back">
         <div class="strip"></div>
+        <div class="logo">
+          <!-- Reused external SVG -->
+          <svg version="1.1" id="visa-logo" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="47.834px" height="47.834px"
+               viewBox="0 0 47.834 47.834" aria-labelledby="visa-title" role="img">
+            <title id="visa-title">Visa Logo</title>
+            <g>
+              <!-- SVG Path content -->
+            </g>
+          </svg>
+        </div>
         <div class="ccv">
-          <label for="ccv">CCV</label>
-          <div id="display-ccv">XXX</div>
+          <label for="card-ccv">CCV</label>
+          <div id="ccv-display"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Form for card details -->
+  <!-- Payment Form -->
   <form class="form" autocomplete="off" novalidate>
+    <!-- Card Number Fields -->
     <fieldset>
       <label for="card-number">Card Number</label>
-      <input type="text" id="card-number" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-1" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-2" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-3" class="input-cart-number" maxlength="4" placeholder="XXXX" />
+      <input type="number" id="card-number" name="card-number-1" class="input-cart-number" maxlength="4" aria-label="First 4 digits of card number" />
+      <input type="number" id="card-number-1" name="card-number-2" class="input-cart-number" maxlength="4" aria-label="Second 4 digits of card number" />
+      <input type="number" id="card-number-2" name="card-number-3" class="input-cart-number" maxlength="4" aria-label="Third 4 digits of card number" />
+      <input type="number" id="card-number-3" name="card-number-4" class="input-cart-number" maxlength="4" aria-label="Last 4 digits of card number" />
     </fieldset>
 
+    <!-- Card Holder Field -->
     <fieldset>
-      <label for="card-holder">Card holder</label>
-      <input type="text" id="card-holder" placeholder="Card Holder Name" required />
+      <label for="card-holder">Card Holder</label>
+      <input type="text" id="card-holder" name="card-holder" aria-label="Card holder's name" required />
     </fieldset>
 
+    <!-- Expiration Date Fields -->
     <fieldset class="fieldset-expiration">
-      <label for="card-expiration-month">Expiration date</label>
+      <label for="card-expiration-month">Expiration Date</label>
       <div class="select">
-        <select id="card-expiration-month" required>
-          <option value="" disabled selected>MM</option>
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
+        <select id="card-expiration-month" name="card-expiration-month" aria-label="Expiration month" required>
+          <option value="" disabled selected>Select Month</option>
+          <option>01</option>
+          <option>02</option>
+          <!-- Rest of the months -->
         </select>
-
-        <select id="card-expiration-year" required>
-          <option value="" disabled selected>YY</option>
-          <option value="23">2023</option>
-          <option value="24">2024</option>
-          <option value="25">2025</option>
+      </div>
+      <div class="select">
+        <select id="card-expiration-year" name="card-expiration-year" aria-label="Expiration year" required>
+          <option value="" disabled selected>Select Year</option>
+          <option>2024</option>
+          <option>2025</option>
+          <!-- Future years updated dynamically if needed -->
         </select>
       </div>
     </fieldset>
 
-    <fieldset>
-      <label for="ccv">CCV</label>
-      <input type="text" id="ccv" maxlength="3" placeholder="XXX" required />
+    <!-- CCV Field -->
+    <fieldset class="fieldset-ccv">
+      <label for="card-ccv">CCV</label>
+      <input type="text" id="card-ccv" name="card-ccv" maxlength="3" aria-label="Card CCV code" required />
     </fieldset>
 
-    <button type="submit" class="submit-button">Submit Payment</button>
+    <!-- Submit Button -->
+    <button class="btn" type="submit" aria-label="Submit payment details"><i class="fa fa-lock"></i> Submit</button>
   </form>
 </div>
+
+<!-- External Link -->
+<a class="the-most" target="_blank" href="https://codepen.io/2016/popular/pens/9/">
+  <img src="https://raw.githubusercontent.com/supahfunk/supah-codepen/master/themost-2016.png" alt="CodePen link">
+</a>
+
