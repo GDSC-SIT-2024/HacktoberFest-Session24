@@ -28,7 +28,7 @@ Buttons
 
   &::after {
     content: '';
-    position: absolute;
+    position
     z-index: 1;
     top: 0;
     left: 0;
