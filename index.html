@@ -1,84 +1,109 @@
+<!--
+    Follow me on:
+    Dribbble: https://dribbble.com/supahfunk
+    Twitter: https://twitter.com/supahfunk
+    Codepen: https://codepen.io/supah/
+
+    This example is for the dailyui challenge (https://dailyui.co/).
+    Enjoy and fork it if you like!
+-->
+
 <div class="checkout">
-  <div class="credit-card-box">
-    <div class="flip">
-      <!-- Front of the Card -->
-      <div class="front">
-        <div class="chip"></div>
-        <div class="logo">
-          <svg version="1.1" id="visa" xmlns="http://www.w3.org/2000/svg" width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834">
-            <!-- SVG content -->
-          </svg>
-        </div>
-        <div class="number">XXXX XXXX XXXX XXXX</div>
-        <div class="card-holder">
-          <label for="card-holder">Card holder</label>
-          <div id="display-card-holder">John Doe</div>
-        </div>
-        <div class="card-expiration-date">
-          <label for="card-expiration-month">Expires</label>
-          <div id="display-expiration">MM/YY</div>
-        </div>
-      </div>
+    <div class="credit-card-box">
+        <div class="flip">
+            <!-- Front of the card -->
+            <div class="card-front">
+                <div class="chip"></div>
+                <div class="logo">
+                    <!-- External SVG for Visa logo to avoid redundancy -->
+                    <img src="path/to/visa-logo.svg" alt="Visa Logo" class="visa-logo">
+                </div>
+                <div class="card-number"></div>
+                <div class="card-holder">
+                    <label for="card-holder-name">Card Holder</label>
+                    <div id="card-holder-name"></div>
+                </div>
+                <div class="card-expiration-date">
+                    <label for="expiration-date">Expires</label>
+                    <div id="expiration-date"></div>
+                </div>
+            </div>
 
-      <!-- Back of the Card -->
-      <div class="back">
-        <div class="strip"></div>
-        <div class="ccv">
-          <label for="ccv">CCV</label>
-          <div id="display-ccv">XXX</div>
+            <!-- Back of the card -->
+            <div class="card-back">
+                <div class="stripe"></div>
+                <div class="logo">
+                    <img src="path/to/visa-logo.svg" alt="Visa Logo" class="visa-logo">
+                </div>
+                <div class="ccv">
+                    <label for="ccv-input">CCV</label>
+                    <div id="ccv-input"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Form for card details -->
-  <form class="form" autocomplete="off" novalidate>
-    <fieldset>
-      <label for="card-number">Card Number</label>
-      <input type="text" id="card-number" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-1" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-2" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-      <input type="text" id="card-number-3" class="input-cart-number" maxlength="4" placeholder="XXXX" />
-    </fieldset>
+    <form class="form" autocomplete="off" novalidate>
+        <fieldset>
+            <label for="card-number-0">Card Number</label>
+            <input type="number" id="card-number-0" class="input-cart-number" maxlength="4" aria-label="Card number block 1" />
+            <input type="number" id="card-number-1" class="input-cart-number" maxlength="4" aria-label="Card number block 2" />
+            <input type="number" id="card-number-2" class="input-cart-number" maxlength="4" aria-label="Card number block 3" />
+            <input type="number" id="card-number-3" class="input-cart-number" maxlength="4" aria-label="Card number block 4" />
+        </fieldset>
 
-    <fieldset>
-      <label for="card-holder">Card holder</label>
-      <input type="text" id="card-holder" placeholder="Card Holder Name" required />
-    </fieldset>
+        <fieldset>
+            <label for="card-holder">Card Holder</label>
+            <input type="text" id="card-holder" autocomplete="off" aria-label="Card holder name" />
+        </fieldset>
 
-    <fieldset class="fieldset-expiration">
-      <label for="card-expiration-month">Expiration date</label>
-      <div class="select">
-        <select id="card-expiration-month" required>
-          <option value="" disabled selected>MM</option>
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
+        <fieldset class="fieldset-expiration">
+            <label for="card-expiration-month">Expiration Date</label>
+            <div class="select">
+                <select id="card-expiration-month" aria-label="Expiration month">
+                    <option value="" disabled selected>MM</option>
+                    <!-- Dynamic Month Options -->
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+            <div class="select">
+                <select id="card-expiration-year" aria-label="Expiration year">
+                    <option value="" disabled selected>YYYY</option>
+                    <!-- Dynamic Year Options -->
+                    <option>2024</option>
+                    <option>2025</option>
+                    <option>2026</option>
+                    <option>2027</option>
+                    <option>2028</option>
+                </select>
+            </div>
+        </fieldset>
 
-        <select id="card-expiration-year" required>
-          <option value="" disabled selected>YY</option>
-          <option value="23">2023</option>
-          <option value="24">2024</option>
-          <option value="25">2025</option>
-        </select>
-      </div>
-    </fieldset>
+        <fieldset class="fieldset-ccv">
+            <label for="card-ccv">CCV</label>
+            <input type="password" id="card-ccv" maxlength="3" autocomplete="off" aria-label="CCV code" />
+        </fieldset>
 
-    <fieldset>
-      <label for="ccv">CCV</label>
-      <input type="text" id="ccv" maxlength="3" placeholder="XXX" required />
-    </fieldset>
-
-    <button type="submit" class="submit-button">Submit Payment</button>
-  </form>
+        <button type="submit" class="btn" aria-label="Submit form securely">
+            <!-- Use inline SVG for lock icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm6 0v4H6v-4m0 4v-4a8 8 0 1 1 16 0v4h-2z" />
+            </svg> Submit
+        </button>
+    </form>
 </div>
+
+<a class="the-most" target="_blank" href="https://codepen.io/2016/popular/pens/9/">
+    <img src="https://raw.githubusercontent.com/supahfunk/supah-codepen/master/themost-2016.png" alt="Popular Pens">
+</a>
