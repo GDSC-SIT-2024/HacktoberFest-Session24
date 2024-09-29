@@ -1,28 +1,206 @@
-<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Include Font Awesome for the lock icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Basic styles for the checkout form */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-Follow me on
-Dribbble: https://dribbble.com/supahfunk
-Twitter: https://twitter.com/supahfunk
-Codepen: https://codepen.io/supah/
+    .checkout {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 350px;
+    }
 
-This example is just for fun.
-I realized it for the dailyui challenge
-https://dailyui.co/
+    .credit-card-box {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      perspective: 1000px;
+      margin-bottom: 20px;
+    }
 
-Fork it if you want, it's free, but I apreciate credits or a retweet
+    .flip {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
 
-Enjoy :)
+    .flip:hover {
+      transform: rotateY(180deg);
+    }
 
--->
-<div class="checkout">
-  <div class="credit-card-box">
-    <div class="flip">
-      <div class="front">
-        <div class="chip"></div>
-        <div class="logo">
-          <svg version="1.1" id="visa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-               width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834" style="enable-background:new 0 0 47.834 47.834;">
-            <g>
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .front {
+      background: linear-gradient(135deg, #1e5799 0%,#2989d8 50%,#207cca 100%);
+    }
+
+    .back {
+      background: linear-gradient(135deg, #1e5799 0%,#2989d8 50%,#207cca 100%);
+      transform: rotateY(180deg);
+    }
+
+    .chip {
+      width: 50px;
+      height: 35px;
+      background-color: gold;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .logo {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .number {
+      font-size: 1.2em;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .card-holder, .card-expiration-date, .ccv {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    .card-holder label, .card-expiration-date label, .ccv label {
+      font-weight: bold;
+    }
+
+    .back .stripe {
+      background: #000;
+      height: 40px;
+      margin-bottom: 20px;
+    }
+
+    .back .ccv {
+      text-align: right;
+      background: #fff;
+      color: #000;
+      padding: 5px;
+      border-radius: 5px;
+      width: 50px;
+      margin-left: auto;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    fieldset {
+      border: none;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    input:focus, select:focus {
+      border-color: #2989d8;
+      outline: none;
+    }
+
+    .select {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      background-color: #2989d8;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:hover {
+      background-color: #1e5799;
+    }
+
+    .btn i {
+      margin-right: 5px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 400px) {
+      .checkout {
+        width: 90%;
+      }
+    }
+
+    /* Error message styles */
+    .error {
+      color: red;
+      font-size: 0.8em;
+      margin-top: 5px;
+    }
+
+    /* Success message styles */
+    .success {
+      color: green;
+      font-size: 1em;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkout">
+    <div class="credit-card-box">
+      <div class="flip">
+        <!-- Front of the Card -->
+        <div class="front">
+          <div class="chip" aria-hidden="true"></div>
+          <div class="logo" aria-label="Visa Logo">
+            <svg version="1.1" id="visa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834" role="img">
+              <title>Visa Logo</title>
               <g>
                 <path d="M44.688,16.814h-3.004c-0.933,0-1.627,0.254-2.037,1.184l-5.773,13.074h4.083c0,0,0.666-1.758,0.817-2.143
                          c0.447,0,4.414,0.006,4.979,0.006c0.116,0.498,0.474,2.137,0.474,2.137h3.607L44.688,16.814z M39.893,26.01
@@ -33,28 +211,33 @@ Enjoy :)
                          l-0.351-0.165c-0.716-0.288-1.638-0.566-2.91-0.546c-1.522,0-2.228,0.634-2.228,1.227c-0.008,0.668,0.824,1.108,2.184,1.77
                          C33.126,23.546,34.163,24.783,34.146,26.404z M0,16.962l0.05-0.286h6.028c0.813,0.031,1.468,0.29,1.694,1.159l1.311,6.304
                          C7.795,20.842,4.691,18.099,0,16.962z M17.581,16.812l-6.123,14.239l-4.114,0.007L3.862,19.161
-                         c2.503,1.602,4.635,4.144,5.386,5.914l0.406,1.469l3.808-9.729L17.581,16.812L17.581,16.812z M19.153,16.8h3.89L20.61,31.066
+                         c2.503,1.602,4.635,4.144,5.386,5.914l0.406,1.469l3.808-9.729L17.581,16.812z M19.153,16.8h3.89L20.61,31.066
                          h-3.888L19.153,16.8z"/>
               </g>
-            </g>
-          </svg>
+            </svg>
+          </div>
+          <div class="number" aria-label="Credit card number">**** **** **** ****</div>
+          <div class="card-holder">
+            <label>Card Holder</label>
+            <div aria-label="Card holder name">FULL NAME</div>
+          </div>
+          <div class="card-expiration-date">
+            <label>Expires</label>
+            <div aria-label="Expiration date">MM/YY</div>
+          </div>
         </div>
-        <div class="number"></div>
-        <div class="card-holder">
-          <label>Card holder</label>
-          <div></div>
-        </div>
-        <div class="card-expiration-date">
-          <label>Expires</label>
-          <div></div>
-        </div>
-      </div>
-      <div class="back">
-        <div class=
-        <div class="logo">
-          <svg version="1.1" id="visa" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-               width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834" style="enable-background:new 0 0 47.834 47.834;">
-            <g>
+
+        <!-- Back of the Card -->
+        <div class="back">
+          <div class="stripe" aria-hidden="true"></div>
+          <div class="ccv">
+            <label>CCV</label>
+            <div aria-label="CCV code">***</div>
+          </div>
+          <div class="logo" aria-label="Visa Logo">
+            <svg version="1.1" id="visa-back" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 width="47.834px" height="47.834px" viewBox="0 0 47.834 47.834" role="img">
+              <title>Visa Logo</title>
               <g>
                 <path d="M44.688,16.814h-3.004c-0.933,0-1.627,0.254-2.037,1.184l-5.773,13.074h4.083c0,0,0.666-1.758,0.817-2.143
                          c0.447,0,4.414,0.006,4.979,0.006c0.116,0.498,0.474,2.137,0.474,2.137h3.607L44.688,16.814z M39.893,26.01
@@ -65,76 +248,168 @@ Enjoy :)
                          l-0.351-0.165c-0.716-0.288-1.638-0.566-2.91-0.546c-1.522,0-2.228,0.634-2.228,1.227c-0.008,0.668,0.824,1.108,2.184,1.77
                          C33.126,23.546,34.163,24.783,34.146,26.404z M0,16.962l0.05-0.286h6.028c0.813,0.031,1.468,0.29,1.694,1.159l1.311,6.304
                          C7.795,20.842,4.691,18.099,0,16.962z M17.581,16.812l-6.123,14.239l-4.114,0.007L3.862,19.161
-                         c2.503,1.602,4.635,4.144,5.386,5.914l0.406,1.469l3.808-9.729L17.581,16.812L17.581,16.812z M19.153,16.8h3.89L20.61,31.066
+                         c2.503,1.602,4.635,4.144,5.386,5.914l0.406,1.469l3.808-9.729L17.581,16.812z M19.153,16.8h3.89L20.61,31.066
                          h-3.888L19.153,16.8z"/>
               </g>
-            </g>
-          </svg>
-
-        </div>
-        <div class="ccv">
-          <label>CCV</label>
-          <div></div>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
+
+    <form class="form" autocomplete="off" novalidate>
+      <fieldset>
+        <label for="card-number">Card Number</label>
+        <input type="text" id="card-number" name="card-number" class="input-cart-number" maxlength="19" 
+               aria-label="Card number" placeholder="1234 5678 9123 4567" required pattern="\d{4} \d{4} \d{4} \d{4}">
+        <div class="error" id="card-number-error"></div>
+      </fieldset>
+
+      <fieldset>
+        <label for="card-holder">Card Holder</label>
+        <input type="text" id="card-holder" name="card-holder" aria-label="Card holder name" 
+               placeholder="John Doe" required>
+        <div class="error" id="card-holder-error"></div>
+      </fieldset>
+
+      <fieldset class="fieldset-expiration">
+        <label for="card-expiration-month">Expiration Date</label>
+        <div class="select">
+          <select id="card-expiration-month" name="card-expiration-month" aria-label="Expiration month" required>
+            <option value="" disabled selected>MM</option>
+            <!-- Months -->
+            <option>01</option>
+            <option>02</option>
+            <option>03</option>
+            <option>04</option>
+            <option>05</option>
+            <option>06</option>
+            <option>07</option>
+            <option>08</option>
+            <option>09</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+          </select>
+          <div class="error" id="card-expiration-month-error"></div>
+        </div>
+        <div class="select">
+          <select id="card-expiration-year" name="card-expiration-year" aria-label="Expiration year" required>
+            <option value="" disabled selected>YYYY</option>
+            <!-- Dynamically generated years via JavaScript -->
+          </select>
+          <div class="error" id="card-expiration-year-error"></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fieldset-ccv">
+        <label for="card-ccv">CCV</label>
+        <input type="text" id="card-ccv" name="card-ccv" maxlength="3" 
+               aria-label="CCV code" placeholder="123" required pattern="\d{3}">
+        <div class="error" id="card-ccv-error"></div>
+      </fieldset>
+
+      <button type="submit" class="btn"><i class="fa fa-lock"></i> Submit</button>
+      <div class="success" id="success-message"></div>
+    </form>
   </div>
-  <form class="form" autocomplete="off" novalidate>
-    <fieldset>
-      <label for="card-number">Card Number</label>
-      <input type="num" id="card-number" class="input-cart-number" maxlength="4" />
-      <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" />
-      <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" />
-      <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" />
-    </fieldset>
-    <fieldset>
-      <label for="card-holder">Card holder</label>
-      <input type="text" id="card-holder" />
-    </fieldset>
-    <fieldset class="fieldset-expiration">
-      <label for="card-expiration-month">Expiration date</label>
-      <div class="select">
-        <select id="card-expiration-month">
-          <option></option>
-          <option>01</option>
-          <option>02</option>
-          <option>03</option>
-          <option>04</option>
-          <option>05</option>
-          <option>06</option>
-          <option>07</option>
-          <option>08</option>
-          <option>09</option>
-          <option>10</option>
-          <option>11</option>
-          <option>12</option>
-        </select>
-      </div>
-      <div class="select">
-        <select id="card-expiration-year">
-          <option></option>
-          <option>2016</option>
-          <option>2017</option>
-          <option>2018</option>
-          <option>2019</option>
-          <option>2020</option>
-          <option>2021</option>
-          <option>2022</option>
-          <option>2023</option>
-          <option>2024</option>
-          <option>2025</option>
-        </select>
-      </div>
-    </fieldset>
-    <fieldset class="fieldset-ccv">
-      <label for="card-ccv">CCV</label>
-      <input type="text" id="card-ccv" maxlength="3" />
-    </fieldset>
-    <button class="btn"><i class="fa fa-lock"></i> submit</button>
-  </form>
-</div>
 
+  <!-- Optional: Include JavaScript for enhanced functionality -->
+  <script>
+    // Dynamically populate the expiration year select
+    const yearSelect = document.getElementById('card-expiration-year');
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+      const option = document.createElement('option');
+      option.value = currentYear + i;
+      option.textContent = currentYear + i;
+      yearSelect.appendChild(option);
+    }
 
-<a class="the-most" target="_blank" href="https://codepen.io/2016/popular/pens/9/">
-  <img src="https://raw.githubusercontent.com/supahfunk/supah-codepen/master/themost-2016.png">
-</a>
+    // Form validation
+    const form = document.querySelector('.form');
+    const cardNumber = document.getElementById('card-number');
+    const cardHolder = document.getElementById('card-holder');
+    const cardMonth = document.getElementById('card-expiration-month');
+    const cardYear = document.getElementById('card-expiration-year');
+    const cardCCV = document.getElementById('card-ccv');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let isValid = true;
+
+      // Reset previous errors
+      document.querySelectorAll('.error').forEach(error => error.textContent = '');
+      document.getElementById('success-message').textContent = '';
+
+      // Validate Card Number
+      const cardNumberPattern = /^\d{4} \d{4} \d{4} \d{4}$/;
+      if (!cardNumber.value.match(cardNumberPattern)) {
+        isValid = false;
+        document.getElementById('card-number-error').textContent = 'Please enter a valid card number.';
+      }
+
+      // Validate Card Holder
+      if (cardHolder.value.trim() === '') {
+        isValid = false;
+        document.getElementById('card-holder-error').textContent = 'Please enter the card holder\'s name.';
+      }
+
+      // Validate Expiration Month
+      if (cardMonth.value === '') {
+        isValid = false;
+        document.getElementById('card-expiration-month-error').textContent = 'Please select a month.';
+      }
+
+      // Validate Expiration Year
+      if (cardYear.value === '') {
+        isValid = false;
+        document.getElementById('card-expiration-year-error').textContent = 'Please select a year.';
+      }
+
+      // Validate CCV
+      const ccvPattern = /^\d{3}$/;
+      if (!cardCCV.value.match(ccvPattern)) {
+        isValid = false;
+        document.getElementById('card-ccv-error').textContent = 'Please enter a valid CCV.';
+      }
+
+      if (isValid) {
+        // Here you can handle the form submission, e.g., send data to the server
+        document.getElementById('success-message').textContent = 'Payment Successful!';
+        form.reset();
+        // Reset the card display
+        document.querySelector('.front .number').textContent = '**** **** **** ****';
+        document.querySelector('.front .card-holder div').textContent = 'FULL NAME';
+        document.querySelector('.front .card-expiration-date div').textContent = 'MM/YY';
+        document.querySelector('.back .ccv div').textContent = '***';
+      }
+    });
+
+    // Update card display in real-time
+    cardNumber.addEventListener('input', function() {
+      const formattedNumber = cardNumber.value.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
+      cardNumber.value = formattedNumber;
+      document.querySelector('.front .number').textContent = formattedNumber || '**** **** **** ****';
+    });
+
+    cardHolder.addEventListener('input', function() {
+      document.querySelector('.front .card-holder div').textContent = cardHolder.value.toUpperCase() || 'FULL NAME';
+    });
+
+    cardMonth.addEventListener('change', updateExpirationDate);
+    cardYear.addEventListener('change', updateExpirationDate);
+
+    cardCCV.addEventListener('input', function() {
+      document.querySelector('.back .ccv div').textContent = cardCCV.value || '***';
+    });
+
+    function updateExpirationDate() {
+      const month = cardMonth.value;
+      const year = cardYear.value ? String(cardYear.value).slice(-2) : 'YY';
+      document.querySelector('.front .card-expiration-date div').textContent = `${month || 'MM'}/${year}`;
+    }
+  </script>
+
+</body>
+</html>
