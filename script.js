@@ -1,5 +1,5 @@
 $('.input-cart-number').on('keyup change', function(){
-  $t = $(this);
+  var $t = $(this);
   
   if ($t.val().length > 3) {
     $t.next().focus();
@@ -11,27 +11,22 @@ $('.input-cart-number').on('keyup change', function(){
     if ($(this).val().length == 4) {
       $(this).next().focus();
     }
-  })
+  });
   
-  $('.credit-card-box .number').html(card_number);
+  $('.credit-card-box .number').html(card_number.trim());
 });
 
 $('#card-holder').on('keyup change', function(){
-  $t = $(this);
-  $('.credit-card-box .card-holder div').html($t.val());
-});
-
-$('#card-holder').on('keyup change', function(){
-  $t = $(this);
+  var $t = $(this);
   $('.credit-card-box .card-holder div').html($t.val());
 });
 
 $('#card-expiration-month, #card-expiration-year').change(function(){
-  m = $('#card-expiration-month option').index($('#card-expiration-month option:selected'));
+  var m = $('#card-expiration-month option').index($('#card-expiration-month option:selected'));
   m = (m < 10) ? '0' + m : m;
-  y = $('#card-expiration-year').val().substr(2,2);
+  var y = $('#card-expiration-year').val().substr(2,2);
   $('.card-expiration-date div').html(m + '/' + y);
-})
+});
 
 $('#card-ccv').on('focus', function(){
   $('.credit-card-box').addClass('hover');
@@ -41,13 +36,11 @@ $('#card-ccv').on('focus', function(){
   $('.ccv div').html($(this).val());
 });
 
-
 /*--------------------
 CodePen Tile Preview
 --------------------*/
 setTimeout(function(){
-
-  });
+  // Intentionally left empty or add relevant code here.
 }, 500);
 
 /*function getCreditCardType(accountNumber) {
@@ -58,11 +51,11 @@ setTimeout(function(){
   } else if ( /^(5018|5020|5038|6304|6759|676[1-3])/.test(accountNumber)) {
     result = 'maestro';
   } else {
-    result = 'unknown'
+    result = 'unknown';
   }
   return result;
 }
 
 $('#card-number').change(function(){
   console.log(getCreditCardType($(this).val()));
-})*/
+});*/
